@@ -1,5 +1,6 @@
 #Repositorio creado por Patricio Hernández
 #Modificado por Othón Berlanga
+#Modificado por Sergio Morales
 
 from random import *
 from turtle import *
@@ -15,6 +16,7 @@ tiles = list(['🐀','🐂','🐄','🐅','🐇','🐈','🐉','🐊',
 state = {'mark': None}
 hide = [True] * 64
 click = 0
+pairs = 0
 
 def square(x, y):
     """Draw white square with black outline at (x, y)."""
@@ -53,6 +55,11 @@ def tap(x, y):
         hide[spot] = False
         hide[mark] = False
         state['mark'] = None
+        #Checked if all pairs where discovered and displayed conglats message
+        global pairs
+        pairs += 1
+        if (pairs == 32):
+            print('Ganaste!')
 
 
 def draw():
@@ -74,7 +81,9 @@ def draw():
         up()
         goto(x + 2, y)
         color('black')
-        write(tiles[mark], font=('Arial', 30, 'normal'))
+        #Originalmente se debía de cambiar la alineación por 'center' pero
+        #debido a los íconos que usamos, tuvimos que alinearlos a la izquierda
+        write(tiles[mark], align='left', font=('Arial', 30, 'normal'))
 
     update()
     ontimer(draw, 100)
